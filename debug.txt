@@ -1,0 +1,380 @@
+This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
+
+The intent of this script is to allow users to self-diagnose their installations.  This is accomplished by running tests against our software and providing the user with links to FAQ articles when a problem is detected.  Since we are a small team and Pi-hole has been growing steadily, it is our hope that this will help us spend more time on development.
+
+NOTE: All log files auto-delete after 48 hours and ONLY the Pi-hole developers can access your data via the given token. We have taken these extra steps to secure your data and will work to further reduce any personal information gathered.
+
+*** [ INITIALIZING ]
+[i] 2019-10-25:16:40:11 debug log has been initialized.
+
+*** [ INITIALIZING ] Sourcing setup variables
+[i] Sourcing /etc/pihole/setupVars.conf...
+
+*** [ DIAGNOSING ]: Core version
+[i] Core: v4.3.2 (https://discourse.pi-hole.net/t/how-do-i-update-pi-hole/249)
+[i] Branch: master
+[i] Commit: v4.3.2-0-ge41c4b5
+
+*** [ DIAGNOSING ]: Web version
+[i] Web: v4.3.2 (https://discourse.pi-hole.net/t/how-do-i-update-pi-hole/249)
+[i] Branch: master
+[i] Commit: v4.3.2-0-g38d8e77
+
+*** [ DIAGNOSING ]: FTL version
+[â] FTL: v4.3.1
+
+*** [ DIAGNOSING ]: lighttpd version
+[i] 1.4.53
+
+*** [ DIAGNOSING ]: php version
+[i] 7.3.9
+
+*** [ DIAGNOSING ]: Operating system
+[â] Raspbian GNU/Linux 10 (buster)
+
+*** [ DIAGNOSING ]: SELinux
+[i] SELinux not detected
+
+*** [ DIAGNOSING ]: Processor
+[â] armv7l
+
+*** [ DIAGNOSING ]: Networking
+[â] IPv4 address(es) bound to the wlan0 interface:
+   192.168.1.146/24 matches the IP found in /etc/pihole/setupVars.conf
+
+[â] IPv6 address(es) bound to the wlan0 interface:
+   fe80::1221:d930:9925:7363 does not match the IP found in /etc/pihole/setupVars.conf (https://discourse.pi-hole.net/t/use-ipv6-ula-addresses-for-pi-hole/2127)
+
+   ^ Please note that you may have more than one IP address listed.
+   As long as one of them is green, and it matches what is in /etc/pihole/setupVars.conf, there is no need for concern.
+
+   The link to the FAQ is for an issue that sometimes occurs when the IPv6 address changes, which is why we check for it.
+
+[i] Default IPv4 gateway: 192.168.1.1
+   * Pinging 192.168.1.1...
+[â] Gateway responded.
+
+*** [ DIAGNOSING ]: Ports in use
+*:5900 vncserver- (IPv6)
+*:5900 vncserver- (IPv4)
+*:22 sshd (IPv4)
+*:22 sshd (IPv6)
+[*:80] is in use by lighttpd
+[*:80] is in use by lighttpd
+[*:53] is in use by pihole-FTL
+[*:53] is in use by pihole-FTL
+[127.0.0.1:4711] is in use by pihole-FTL
+[[::1]:4711] is in use by pihole-FTL
+
+*** [ DIAGNOSING ]: Name resolution (IPv4) using a random blocked domain and a known ad-serving domain
+[â] chegousuavez.000webhostapp.com is 0.0.0.0 via localhost (127.0.0.1)
+[â] chegousuavez.000webhostapp.com is 0.0.0.0 via Pi-hole (192.168.1.146)
+[â] doubleclick.com is 172.217.1.14 via a remote, public DNS server (8.8.8.8)
+
+*** [ DIAGNOSING ]: Pi-hole processes
+[â] lighttpd daemon is active
+[â] pihole-FTL daemon is active
+
+*** [ DIAGNOSING ]: Setup variables
+    PIHOLE_INTERFACE=wlan0
+    IPV4_ADDRESS=192.168.1.146/24
+    IPV6_ADDRESS=
+    QUERY_LOGGING=true
+    INSTALL_WEB_SERVER=true
+    INSTALL_WEB_INTERFACE=true
+    LIGHTTPD_ENABLED=true
+    BLOCKING_ENABLED=true
+    DNSMASQ_LISTENING=single
+    PIHOLE_DNS_1=8.8.8.8
+    PIHOLE_DNS_2=1.1.1.1
+    PIHOLE_DNS_3=1.0.0.1
+    DNS_FQDN_REQUIRED=true
+    DNS_BOGUS_PRIV=true
+    DNSSEC=false
+    CONDITIONAL_FORWARDING=false
+
+*** [ DIAGNOSING ]: Dashboard and block page
+[â] Block page X-Header: X-Pi-hole: A black hole for Internet advertisements.
+[â] Web interface X-Header: X-Pi-hole: The Pi-hole Web interface is working!
+
+*** [ DIAGNOSING ]: Gravity list
+-rw-r--r-- 1 root root 2713500 Oct 25 01:38 /etc/pihole/gravity.list
+   -----head of gravity.list------
+   0.0.0.0
+   0.nextyourcontent.com
+   0.r.msn.com
+   0.start.bz
+
+   -----tail of gravity.list------
+   zzz.clickbank.net
+   zzzezeroe.fr
+   zzzpooeaz-france.com
+   zzzrtrcm2.com
+
+*** [ DIAGNOSING ]: contents of /etc/pihole
+
+-rw-r--r-- 1 root root 313 Oct 25 01:33 /etc/pihole/adlists.list
+   https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+   https://mirror1.malwaredomains.com/files/justdomains
+   http://sysctl.org/cameleon/hosts
+   https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+   https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+   https://hosts-file.net/ad_servers.txt
+
+-rw-r--r-- 1 root root 54 Oct 25 16:12 /etc/pihole/blacklist.txt
+   www.facebook.com
+   www.instagram.com
+   www.m.facebook.com
+
+-rw-r--r-- 1 root root 48 Oct 25 01:38 /etc/pihole/local.list
+   192.168.1.146 raspberrypi
+   192.168.1.146 pi.hole
+
+-rw-r--r-- 1 root root 234 Oct 25 01:38 /etc/pihole/logrotate
+   /var/log/pihole.log {
+   	su root root
+   	daily
+   	copytruncate
+   	rotate 5
+   	compress
+   	delaycompress
+   	notifempty
+   	nomail
+   }
+   /var/log/pihole-FTL.log {
+   	su root root
+   	weekly
+   	copytruncate
+   	rotate 3
+   	compress
+   	delaycompress
+   	notifempty
+   	nomail
+   }
+
+-rw-r--r-- 1 root root 0 Oct 25 02:19 /etc/pihole/whitelist.txt
+
+*** [ DIAGNOSING ]: contents of /etc/dnsmasq.d
+
+-rw-r--r-- 1 root root 1428 Oct 25 12:12 /etc/dnsmasq.d/01-pihole.conf
+   addn-hosts=/etc/pihole/gravity.list
+   addn-hosts=/etc/pihole/black.list
+   addn-hosts=/etc/pihole/local.list
+   localise-queries
+   no-resolv
+   cache-size=10000
+   log-queries
+   log-facility=/var/log/pihole.log
+   local-ttl=2
+   log-async
+   server=8.8.8.8
+   server=1.1.1.1
+   server=1.0.0.1
+   domain-needed
+   bogus-priv
+   interface=wlan0
+
+*** [ DIAGNOSING ]: contents of /etc/lighttpd
+
+-rw-r--r-- 1 root root 3499 Oct 25 01:38 /etc/lighttpd/lighttpd.conf
+   server.modules = (
+   	"mod_access",
+   	"mod_accesslog",
+   	"mod_auth",
+   	"mod_expire",
+   	"mod_compress",
+   	"mod_redirect",
+   	"mod_setenv",
+   	"mod_rewrite"
+   )
+   server.document-root        = "/var/www/html"
+   server.error-handler-404    = "/pihole/index.php"
+   server.upload-dirs          = ( "/var/cache/lighttpd/uploads" )
+   server.errorlog             = "/var/log/lighttpd/error.log"
+   server.pid-file             = "/var/run/lighttpd.pid"
+   server.username             = "www-data"
+   server.groupname            = "www-data"
+   server.port                 = 80
+   accesslog.filename          = "/var/log/lighttpd/access.log"
+   accesslog.format            = "%{%s}t|%V|%r|%s|%b"
+   index-file.names            = ( "index.php", "index.html", "index.lighttpd.html" )
+   url.access-deny             = ( "~", ".inc", ".md", ".yml", ".ini" )
+   static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+   compress.cache-dir          = "/var/cache/lighttpd/compress/"
+   compress.filetype           = ( "application/javascript", "text/css", "text/html", "text/plain" )
+   mimetype.assign   = ( ".png"  => "image/png",
+                         ".jpg"  => "image/jpeg",
+                         ".jpeg" => "image/jpeg",
+                         ".html" => "text/html",
+                         ".css" => "text/css; charset=utf-8",
+                         ".js" => "application/javascript",
+                         ".json" => "application/json",
+                         ".txt"  => "text/plain",
+                         ".svg"  => "image/svg+xml" )
+   include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
+   include_shell "find /etc/lighttpd/conf-enabled -name '*.conf' -a ! -name 'letsencrypt.conf' -printf 'include \"%p\"
+' 2>/dev/null"
+   $HTTP["url"] =~ "^/admin/" {
+       
+       setenv.add-response-header = (
+           "X-Pi-hole" => "The Pi-hole Web interface is working!",
+           "X-Frame-Options" => "DENY"
+       )
+       $HTTP["url"] =~ ".ttf$" {
+           
+           setenv.add-response-header = ( "Access-Control-Allow-Origin" => "*" )
+       }
+   }
+   $HTTP["url"] =~ "^/admin/\.(.*)" {
+        url.access-deny = ("")
+   }
+   include_shell "cat external.conf 2>/dev/null"
+
+*** [ DIAGNOSING ]: contents of /etc/cron.d
+
+-rw-r--r-- 1 root root 1704 Oct 25 01:38 /etc/cron.d/pihole
+   31 4   * * 7   root    PATH="$PATH:/usr/local/bin/" pihole updateGravity >/var/log/pihole_updateGravity.log || cat /var/log/pihole_updateGravity.log
+   00 00   * * *   root    PATH="$PATH:/usr/local/bin/" pihole flush once quiet
+   @reboot root /usr/sbin/logrotate /etc/pihole/logrotate
+   */10 *  * * *   root    PATH="$PATH:/usr/local/bin/" pihole updatechecker local
+   11 13  * * *   root    PATH="$PATH:/usr/local/bin/" pihole updatechecker remote
+   @reboot root    PATH="$PATH:/usr/local/bin/" pihole updatechecker remote reboot
+
+*** [ DIAGNOSING ]: contents of /var/log/lighttpd
+
+-rw-r--r-- 1 www-data www-data 875 Oct 25 11:45 /var/log/lighttpd/error.log
+   2019-10-25 01:37:47: (server.c.1464) server started (lighttpd/1.4.53) 
+   2019-10-25 01:38:14: (server.c.2059) server stopped by UID = 0 PID = 1 
+   2019-10-25 01:38:15: (server.c.1464) server started (lighttpd/1.4.53) 
+   2019-10-25 01:38:15: (server.c.1493) WARNING: unknown config-key: alias.url (ignored) 
+   2019-10-25 07:12:37: (server.c.2059) server stopped by UID = 0 PID = 1 
+   2019-10-25 07:12:47: (server.c.1464) server started (lighttpd/1.4.53) 
+   2019-10-25 07:12:47: (server.c.1493) WARNING: unknown config-key: alias.url (ignored) 
+   2019-10-25 11:45:44: (mod_fastcgi.c.421) FastCGI-stderr: PHP Warning:  unlink(../custom_disable_timer): No such file or directory in /var/www/html/admin/api.php on line 72
+   2019-10-25 11:45:46: (mod_fastcgi.c.421) FastCGI-stderr: PHP Warning:  unlink(../custom_disable_timer): No such file or directory in /var/www/html/admin/api.php on line 47
+
+*** [ DIAGNOSING ]: contents of /var/log
+
+-rw-r--r-- 1 pihole pihole 22550 Oct 25 16:12 /var/log/pihole-FTL.log
+   -----head of pihole-FTL.log------
+   [2019-10-25 01:38:30.706 11750] Using log file /var/log/pihole-FTL.log
+   [2019-10-25 01:38:30.706 11750] ########## FTL started! ##########
+   [2019-10-25 01:38:30.706 11750] FTL branch: master
+   [2019-10-25 01:38:30.706 11750] FTL version: v4.3.1
+   [2019-10-25 01:38:30.706 11750] FTL commit: b60d63f
+   [2019-10-25 01:38:30.706 11750] FTL date: 2019-05-25 21:37:26 +0200
+   [2019-10-25 01:38:30.706 11750] FTL user: pihole
+   [2019-10-25 01:38:30.706 11750] Starting config file parsing (/etc/pihole/pihole-FTL.conf)
+   [2019-10-25 01:38:30.706 11750]    SOCKET_LISTENING: only local
+   [2019-10-25 01:38:30.706 11750]    AAAA_QUERY_ANALYSIS: Show AAAA queries
+   [2019-10-25 01:38:30.706 11750]    MAXDBDAYS: max age for stored queries is 365 days
+   [2019-10-25 01:38:30.706 11750]    RESOLVE_IPV6: Resolve IPv6 addresses
+   [2019-10-25 01:38:30.706 11750]    RESOLVE_IPV4: Resolve IPv4 addresses
+   [2019-10-25 01:38:30.706 11750]    DBINTERVAL: saving to DB file every minute
+   [2019-10-25 01:38:30.706 11750]    DBFILE: Using /etc/pihole/pihole-FTL.db
+   [2019-10-25 01:38:30.706 11750]    MAXLOGAGE: Importing up to 24.0 hours of log data
+   [2019-10-25 01:38:30.706 11750]    PRIVACYLEVEL: Set to 0
+   [2019-10-25 01:38:30.706 11750]    IGNORE_LOCALHOST: Show queries from localhost
+   [2019-10-25 01:38:30.707 11750]    BLOCKINGMODE: Null IPs for blocked domains
+   [2019-10-25 01:38:30.707 11750]    ANALYZE_ONLY_A_AND_AAAA: Disabled. Analyzing all queries
+   [2019-10-25 01:38:30.707 11750]    DBIMPORT: Importing history from database
+   [2019-10-25 01:38:30.707 11750]    PIDFILE: Using /var/run/pihole-FTL.pid
+   [2019-10-25 01:38:30.707 11750]    PORTFILE: Using /var/run/pihole-FTL.port
+   [2019-10-25 01:38:30.707 11750]    SOCKETFILE: Using /var/run/pihole/FTL.sock
+   [2019-10-25 01:38:30.707 11750]    WHITELISTFILE: Using /etc/pihole/whitelist.txt
+   [2019-10-25 01:38:30.707 11750]    BLACKLISTFILE: Using /etc/pihole/black.list
+   [2019-10-25 01:38:30.707 11750]    GRAVITYFILE: Using /etc/pihole/gravity.list
+   [2019-10-25 01:38:30.707 11750]    REGEXLISTFILE: Using /etc/pihole/regex.list
+   [2019-10-25 01:38:30.707 11750]    SETUPVARSFILE: Using /etc/pihole/setupVars.conf
+   [2019-10-25 01:38:30.707 11750]    AUDITLISTFILE: Using /etc/pihole/auditlog.list
+   [2019-10-25 01:38:30.707 11750]    MACVENDORDB: Using /etc/pihole/macvendor.db
+   [2019-10-25 01:38:30.707 11750]    PARSE_ARP_CACHE: Active
+   [2019-10-25 01:38:30.707 11750] Finished config file parsing
+   [2019-10-25 01:38:30.708 11750] SQLite3 message: cannot open file at line 38452 of [0eca3dd3d3] (14)
+   [2019-10-25 01:38:30.708 11750] SQLite3 message: os_unix.c:38452: (2) open(/etc/pihole/pihole-FTL.db) -  (14)
+
+   -----tail of pihole-FTL.log------
+   [2019-10-25 12:12:43.386 22096]  -> Cached DNS queries: 138
+   [2019-10-25 12:12:43.386 22096]  -> Forwarded DNS queries: 3265
+   [2019-10-25 12:12:43.386 22096]  -> Exactly blocked DNS queries: 237
+   [2019-10-25 12:12:43.386 22096]  -> Unknown DNS queries: 140
+   [2019-10-25 12:12:43.386 22096]  -> Unique domains: 805
+   [2019-10-25 12:12:43.386 22096]  -> Unique clients: 2
+   [2019-10-25 12:12:43.387 22096]  -> Known forward destinations: 2
+   [2019-10-25 12:12:43.387 22096] Successfully accessed setupVars.conf
+   [2019-10-25 12:12:43.396 22098] PID of FTL process: 22098
+   [2019-10-25 12:12:43.397 22098] Listening on port 4711 for incoming IPv4 telnet connections
+   [2019-10-25 12:12:43.398 22098] Listening on port 4711 for incoming IPv6 telnet connections
+   [2019-10-25 12:12:43.399 22098] Listening on Unix socket
+   [2019-10-25 12:12:43.402 22098] Received SIGHUP, reloading cache
+   [2019-10-25 12:12:43.402 22098] Blocking status is enabled
+   [2019-10-25 12:12:43.402 22098] Compiled 0 Regex filters and 0 whitelisted domains in 0.1 msec (0 errors)
+   [2019-10-25 12:12:43.405 22098] /etc/pihole/black.list: parsed 0 domains (took 0.2 ms)
+   [2019-10-25 12:12:45.344 22098] /etc/pihole/gravity.list: parsed 116522 domains (took 1938.8 ms)
+   [2019-10-25 12:13:00.455 22098] New forward server: 8.8.8.8 (2/512)
+   [2019-10-25 12:55:49.024 22098] Resizing "/FTL-queries" from 196608 to 393216
+   [2019-10-25 14:51:03.304 22098] Resizing "/FTL-strings" from 24576 to 28672
+   [2019-10-25 16:11:45.955 22098] Received SIGHUP, reloading cache
+   [2019-10-25 16:11:45.958 22098] Blocking status is enabled
+   [2019-10-25 16:11:45.958 22098] Compiled 0 Regex filters and 0 whitelisted domains in 0.1 msec (0 errors)
+   [2019-10-25 16:11:46.240 22098] /etc/pihole/black.list: parsed 1 domains (took 0.2 ms)
+   [2019-10-25 16:11:47.152 22098] /etc/pihole/gravity.list: parsed 116522 domains (took 910.7 ms)
+   [2019-10-25 16:12:09.815 22098] Received SIGHUP, reloading cache
+   [2019-10-25 16:12:09.815 22098] Blocking status is enabled
+   [2019-10-25 16:12:09.815 22098] Compiled 0 Regex filters and 0 whitelisted domains in 0.1 msec (0 errors)
+   [2019-10-25 16:12:10.124 22098] /etc/pihole/black.list: parsed 2 domains (took 0.1 ms)
+   [2019-10-25 16:12:11.003 22098] /etc/pihole/gravity.list: parsed 116522 domains (took 879.1 ms)
+   [2019-10-25 16:12:25.444 22098] Received SIGHUP, reloading cache
+   [2019-10-25 16:12:25.444 22098] Blocking status is enabled
+   [2019-10-25 16:12:25.445 22098] Compiled 0 Regex filters and 0 whitelisted domains in 0.1 msec (0 errors)
+   [2019-10-25 16:12:25.741 22098] /etc/pihole/black.list: parsed 3 domains (took 0.1 ms)
+   [2019-10-25 16:12:26.576 22098] /etc/pihole/gravity.list: parsed 116522 domains (took 834.9 ms)
+
+*** [ DIAGNOSING ]: contents of /dev/shm
+-rw------- 1 pihole pihole 323584 Oct 25 12:12 /dev/shm/FTL-clients
+-rw------- 1 pihole pihole 108 Oct 25 12:12 /dev/shm/FTL-counters
+-rw------- 1 pihole pihole 65536 Oct 25 12:12 /dev/shm/FTL-domains
+-rw------- 1 pihole pihole 12288 Oct 25 12:12 /dev/shm/FTL-forwarded
+-rw------- 1 pihole pihole 28 Oct 25 12:12 /dev/shm/FTL-lock
+-rw------- 1 pihole pihole 53248 Oct 25 12:12 /dev/shm/FTL-overTime
+-rw------- 1 pihole pihole 393216 Oct 25 12:59 /dev/shm/FTL-queries
+-rw------- 1 pihole pihole 12 Oct 25 12:12 /dev/shm/FTL-settings
+-rw------- 1 pihole pihole 28672 Oct 25 14:51 /dev/shm/FTL-strings
+
+*** [ DIAGNOSING ]: Locale
+    LANG=en_CA
+
+*** [ DIAGNOSING ]: Pi-hole log
+-rw-r--r-- 1 pihole pihole 1933888 Oct 25 16:40 /var/log/pihole.log
+   -----head of pihole.log------
+   Oct 25 01:38:30 dnsmasq[11752]: started, version pi-hole-2.80 cachesize 10000
+   Oct 25 01:38:30 dnsmasq[11752]: compile time options: IPv6 GNU-getopt no-DBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP no-conntrack ipset auth DNSSEC loop-detect inotify dumpfile
+   Oct 25 01:38:30 dnsmasq[11752]: using nameserver 1.0.0.1#53
+   Oct 25 01:38:30 dnsmasq[11752]: using nameserver 1.1.1.1#53
+   Oct 25 01:38:30 dnsmasq[11752]: read /etc/hosts - 5 addresses
+   Oct 25 01:38:30 dnsmasq[11752]: failed to load names from /etc/pihole/local.list: No such file or directory
+   Oct 25 01:38:30 dnsmasq[11752]: failed to load names from /etc/pihole/black.list: No such file or directory
+   Oct 25 01:38:30 dnsmasq[11752]: failed to load names from /etc/pihole/gravity.list: No such file or directory
+   Oct 25 01:38:30 dnsmasq[11752]: query[AAAA] raw.githubusercontent.com from 127.0.0.1
+   Oct 25 01:38:30 dnsmasq[11752]: forwarded raw.githubusercontent.com to 1.0.0.1
+   Oct 25 01:38:30 dnsmasq[11752]: forwarded raw.githubusercontent.com to 1.1.1.1
+   Oct 25 01:38:30 dnsmasq[11752]: reply raw.githubusercontent.com is <CNAME>
+   Oct 25 01:38:30 dnsmasq[11752]: reply github.map.fastly.net is NODATA-IPv6
+   Oct 25 01:38:30 dnsmasq[11752]: query[A] raw.githubusercontent.com from 127.0.0.1
+   Oct 25 01:38:30 dnsmasq[11752]: cached raw.githubusercontent.com is <CNAME>
+   Oct 25 01:38:30 dnsmasq[11752]: forwarded raw.githubusercontent.com to 1.0.0.1
+   Oct 25 01:38:30 dnsmasq[11752]: reply raw.githubusercontent.com is <CNAME>
+   Oct 25 01:38:30 dnsmasq[11752]: reply github.map.fastly.net is 151.101.184.133
+   Oct 25 01:38:31 dnsmasq[11752]: query[A] raw.githubusercontent.com from 127.0.0.1
+   Oct 25 01:38:31 dnsmasq[11752]: cached raw.githubusercontent.com is <CNAME>
+
+
+********************************************
+********************************************
+[â] ** FINISHED DEBUGGING! **
+
+    * The debug log can be uploaded to tricorder.pi-hole.net for sharing with developers only.
+    * For more information, see: https://pi-hole.net/2016/11/07/crack-our-medical-tricorder-win-a-raspberry-pi-3/
+    * If available, we'll use openssl to upload the log, otherwise it will fall back to netcat.
+
+[?] Would you like to upload the log? [y/N] ^C
